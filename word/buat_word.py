@@ -36,17 +36,17 @@ def cm(x):
 PROFIL = {
     "pedoman": dict(
         tex="pedoman/pedoman.tex", font="Times New Roman", size=24,
-        body_line=480, first_indent=720,                 # 2 spasi, alinea 1,27 cm
+        body_line=360, first_indent=567,                 # 1,5 spasi, alinea 1 cm (sama dengan template)
         margin=dict(l=cm(4), r=cm(3), t=cm(4), b=cm(3)),
         footer_align="center", chapter_page_break=True, chapter_align="center",
-        h_sizes=(24, 24, 24, 24), gaya_bab="bab", nomor_gambar="per-bab-titik",
+        h_sizes=(28, 24, 24, 24), gaya_bab="bab", nomor_gambar="per-bab-titik",
         # nomor halaman: awal bab tengah bawah, halaman berikutnya kanan atas
         chapter_sections=True,
         sections={"sampul": dict(footer=False),
                   "depan": dict(footer=True, fmt="lowerRoman", start=2),
                   "bab": dict(chapter=True)},
         final=dict(fmt="decimal", start=None, chapter=True), compact_line=240,
-        table_borders="grid", list_line=480,
+        table_borders="grid", list_line=360,
     ),
     "proposal": dict(
         tex="proposal/proposal.tex", font="Times New Roman", size=24,
@@ -132,7 +132,7 @@ def table_style(sid, name, borders, custom=True):
             none(s) for s in ("top", "left", "bottom", "right", "insideH", "insideV"))
         first = ""
     xml = ('<w:style w:type="table"%s w:styleId="%s"><w:name w:val="%s"/><w:basedOn w:val="TableNormal"/>'
-           '<w:uiPriority w:val="59"/><w:qFormat/><w:tblPr><w:tblInd w:w="0" w:type="dxa"/>%s'
+           '<w:uiPriority w:val="59"/><w:qFormat/><w:tblPr><w:tblInd w:w="85" w:type="dxa"/>%s'
            '<w:tblCellMar><w:top w:w="40" w:type="dxa"/><w:left w:w="85" w:type="dxa"/>'
            '<w:bottom w:w="40" w:type="dxa"/><w:right w:w="85" w:type="dxa"/></w:tblCellMar></w:tblPr>%s</w:style>'
            % (' w:customStyle="1"' if custom else "", sid, name, tbl_b, first))
@@ -320,13 +320,6 @@ def postprocess(p, path):
                             '"application/vnd.openxmlformats-officedocument.wordprocessingml.%s+xml"/></Types>' % (fname, kind))
     items["word/_rels/document.xml.rels"] = rels.encode("utf8")
     items["[Content_Types].xml"] = ct.encode("utf8")
-
-    # mode kompatibilitas Word 2013+: garis tabel sejajar dengan margin (tidak melebar ke kiri)
-    st = items["word/settings.xml"].decode("utf8")
-    if "compatibilityMode" not in st:
-        st = st.replace("<w:rsids>", '<w:compat><w:compatSetting w:name="compatibilityMode" '
-                        'w:uri="http://schemas.microsoft.com/office/word" w:val="15"/></w:compat><w:rsids>', 1)
-        items["word/settings.xml"] = st.encode("utf8")
 
     # penanda seksi -> sectPr lengkap
     seen = {"bab": 0}
