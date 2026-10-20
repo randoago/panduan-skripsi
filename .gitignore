@@ -1,0 +1,13 @@
+# berkas sementara hasil kompilasi LaTeX / konversi Word
+build/
+*.aux
+*.log
+*.xdv
+*.fls
+*.fdb_latexmk
+*.out
+*.toc
+*.lot
+*.lof
+*.synctex.gz
+.DS_Store

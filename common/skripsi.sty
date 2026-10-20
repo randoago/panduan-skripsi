@@ -1,0 +1,86 @@
+% skripsi.sty -- gaya dasar dokumen Fakultas Teknik, Universitas Muhammadiyah Buton
+% Hanya dipakai oleh LaTeX (XeLaTeX). Pandoc tidak membaca berkas ini, sehingga
+% semua yang ada di sini adalah "tata letak"; isi dokumen tidak bergantung padanya.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{skripsi}[2026/10/20 Gaya dokumen FT UM Buton]
+
+% ---------- Font ----------
+\RequirePackage{fontspec}
+\IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{\setmainfont{TeX Gyre Termes}}
+\IfFontExistsTF{Arial}{\setsansfont{Arial}}{\setsansfont{TeX Gyre Heros}}
+
+% ---------- Bahasa ----------
+\RequirePackage{polyglossia}
+\setmainlanguage{indonesian}
+
+% ---------- Paket umum ----------
+\RequirePackage{graphicx}
+\RequirePackage[table]{xcolor}
+\RequirePackage{multirow}
+\RequirePackage{array}
+\RequirePackage{booktabs}
+\RequirePackage{setspace}
+\RequirePackage[shortlabels]{enumitem}
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+\RequirePackage{float}
+\RequirePackage{needspace}
+\RequirePackage{chngcntr}
+\RequirePackage{caption}
+\RequirePackage{amsmath}
+\RequirePackage{indentfirst}
+\RequirePackage[protrusion=false]{microtype}   % tanpa tonjolan huruf ke margin
+\RequirePackage[hidelinks]{hyperref}
+\urlstyle{same}
+
+% ---------- Blok rata tengah satu spasi (sampul, judul halaman, dst.) ----------
+\newenvironment{tengah}
+  {\begin{singlespace}\begingroup\centering\setlength{\parindent}{0pt}\setlength{\parskip}{6pt}}
+  {\par\endgroup\end{singlespace}}
+
+% ---------- Daftar pustaka: baris kedua menjorok 0,5" (1,27 cm), antar entri 2 spasi ----------
+\newenvironment{pustaka}
+  {\begin{singlespace}\begin{list}{}{\setlength{\leftmargin}{1.27cm}\setlength{\itemindent}{-1.27cm}%
+   \setlength{\listparindent}{-1.27cm}\setlength{\parsep}{12pt}\setlength{\itemsep}{0pt}%
+   \setlength{\topsep}{0pt}\setlength{\labelsep}{0pt}\setlength{\labelwidth}{0pt}}\item\relax}
+  {\end{list}\end{singlespace}}
+
+% ---------- Tabel/gambar tanpa garis (untuk persamaan, daftar contoh, dll.) ----------
+\newenvironment{tanpagaris}{\begin{singlespace}}{\end{singlespace}}
+
+% ---------- Daftar isi (di Word diganti dengan field TOC) ----------
+\newenvironment{daftarisi}
+  {\ifdefined\chapter\chapter*{DAFTAR ISI}\addcontentsline{toc}{chapter}{DAFTAR ISI}\else\section*{DAFTAR ISI}\addcontentsline{toc}{section}{DAFTAR ISI}\fi\begin{singlespace}\makeatletter\@starttoc{toc}\makeatother\end{singlespace}}{}
+\newenvironment{halamanbaru}{\clearpage}{}
+% Penanda bagian (di Word menjadi section break dengan penomoran halaman sendiri)
+\newenvironment{akhirsampul}{\clearpage\pagenumbering{roman}}{}
+\newenvironment{akhirdepan}{\clearpage\pagenumbering{arabic}\setcounter{page}{1}\setcounter{table}{0}\setcounter{figure}{0}}{}
+
+% ---------- Blok rata kiri yang digeser ke kanan (penutup surat/kata pengantar) ----------
+\newenvironment{kanan}
+  {\begin{singlespace}\setlength{\parindent}{0pt}\setlength{\parskip}{24pt}\setlength{\leftskip}{7cm}\noindent}
+  {\par\end{singlespace}}
+
+% ---------- Nama label (polyglossia belum memberi "Gambar"/"Tabel" untuk caption) ----------
+\AtBeginDocument{\renewcommand{\figurename}{Gambar}\renewcommand{\tablename}{Tabel}}
+
+% ---------- Label butir formulir (ditulis menjorok, menempel ke kotak di bawahnya) ----------
+\newenvironment{isian}{\par\vspace{6pt}\noindent\hspace*{0.6cm}\begin{singlespace}}{\end{singlespace}\par\nopagebreak\vspace{3pt}}
+
+% ---------- Ruang kosong vertikal dalam cm (sampul); di Word menjadi paragraf kosong setinggi sama ----------
+\RequirePackage{longtable}
+\newenvironment{ruang}[1]{\par\vspace*{#1cm}}{}
+
+% Penanda: semua kolom tabel di dalamnya rata tengah di Word (di LaTeX sudah diatur lewat spesifikasi kolom)
+\newenvironment{tabelpusat}{}{}
+
+% ---------- Sampul dengan huruf lebih besar (di Word: gaya "Sampul Besar" 16 pt / "Sampul Sedang" 14 pt) ----------
+\newenvironment{sampulbesar}
+  {\begin{singlespace}\begingroup\centering\Large\setlength{\parindent}{0pt}\setlength{\parskip}{8pt}}
+  {\par\endgroup\end{singlespace}}
+\newenvironment{sampulsedang}
+  {\begin{singlespace}\begingroup\centering\large\setlength{\parindent}{0pt}\setlength{\parskip}{8pt}}
+  {\par\endgroup\end{singlespace}}
+
+% ---------- Teks abstrak: satu spasi (di Word: gaya "Abstrak") ----------
+\newenvironment{abstrak}{\begin{singlespace}}{\par\end{singlespace}}

@@ -1,0 +1,140 @@
+% =====================================================================
+%  FORMULIR PENGAJUAN JUDUL PENELITIAN / SKRIPSI / TUGAS AKHIR
+%  Program Studi Rekayasa Sistem Komputer, Fakultas Teknik, UM Buton
+%  Kompilasi PDF : xelatex (lihat menu.sh)   |   Word : pandoc (lihat menu.sh)
+% =====================================================================
+\documentclass[12pt,a4paper]{article}
+\usepackage{skripsi}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2.5cm,right=2.5cm]{geometry}
+
+% ---------- Data dosen & peran (common/dosen.tex, common/peran.tex) ----------
+\input{../common/dosen}
+\input{../common/peran}
+
+% ---------- Makro yang ikut dibaca pandoc ----------
+\newcommand{\logo}[1]{\includegraphics[width=#1]{../gambar/logo-umbuton.png}}
+\newcommand{\titik}{…………………………………………………………………………………}
+\newcommand{\kotak}[1]{\begin{longtable}{|p{0.95\linewidth}|}\hline #1 \\ \hline\end{longtable}}
+
+% Satu blok usulan judul (dipakai tiga kali)
+\newcommand{\usulan}[1]{%
+\textbf{Usulan Judul #1}
+
+\textbf{*) Judul ditulis dalam huruf kapital/besar menggunakan font Arial 14 bold. Panjang judul maksimum 15 kata.}
+
+\titik
+
+\titik
+
+\titik
+
+\textbf{*) Untuk isi kotak 1 s.d. 6 di bawah ini ditulis dalam huruf kecil menggunakan font Arial 12 tanpa bold.}
+
+\begin{isian}1.~~OBJEK/TEMPAT PENELITIAN\end{isian}
+\kotak{%
+\begin{itemize}
+\item Tuliskan dengan jelas objek/tempat penelitian beserta alamatnya.
+\item Khusus untuk penelitian yang tidak menggunakan objek, tempat penelitian dapat menggunakan alamat “Laboratorium Pemrograman/Laboratorium Robotika/Laboratorium Jaringan UM Buton”.
+\end{itemize}}
+
+\begin{isian}2.~~LATAR BELAKANG MASALAH\end{isian}
+\kotak{Menjelaskan permasalahan yang dihadapi, diuraikan secara jelas, ringkas dan sistematis.}
+
+\begin{isian}3.~~RUMUSAN MASALAH\end{isian}
+\kotak{Berisi penjelasan tentang rumusan masalah yang telah disebutkan di bagian latar belakang, dituliskan dalam bentuk penomoran.}
+
+\begin{isian}4.~~TUJUAN PENELITIAN\end{isian}
+\kotak{Berisi penjelasan tentang tujuan penelitian (menjawab pernyataan dari bagian rumusan masalah).}
+
+\begin{isian}5.~~PENELITIAN TERKAIT\end{isian}
+\kotak{Cantumkan minimal 10 penelitian terkait/relevan dengan judul penelitian yang akan diajukan, dapat diambil dari jurnal/prosiding.
+
+Buatlah kesimpulan dari masing-masing penelitian yang dirujuk serta tunjukkan perbedaan dan persamaan dengan penelitian yang dilakukan, mencakup permasalahan yang diteliti atau metode/algoritma yang digunakan.
+
+Format penulisannya sebagai berikut:
+\begin{enumerate}
+\item Untuk jurnal/prosiding: tuliskan judul lengkap artikel ilmiah, nama pengarang, nama perguruan tinggi, nama jurnal/prosiding, Vol./Edisi, tahun terbit dan nomor ISSN.
+\end{enumerate}
+\textbf{Contoh:}
+
+\textbf{“PERAN TEKNOLOGI INFORMASI DAN KOMUNIKASI DALAM PENDIDIKAN”; Haris Budiman; Universitas Islam Negeri Raden Intan Lampung; Al-Tadzkiyyah: Jurnal Pendidikan Islam; Volume 8 No. I 2017; E-ISSN: 2528-2476.}
+
+\textbf{Persamaan: ………………………………}
+
+\textbf{Perbedaan: ………………………………}}
+
+\begin{isian}6.~~DAFTAR PUSTAKA\end{isian}
+\kotak{Isi dari bagian ini adalah rujukan dari jurnal yang terkait dengan penelitian yang diusulkan.
+
+~}
+
+\bigskip
+}
+
+% ---------- Tata letak khusus LaTeX ----------
+\IfFontExistsTF{Arial}{\setmainfont{Arial}}{\setmainfont{TeX Gyre Heros}}
+\setstretch{1.1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+\setlist{nosep,leftmargin=0.6cm}
+\renewcommand{\arraystretch}{1.15}
+\hyphenpenalty=10000 \exhyphenpenalty=10000 \emergencystretch=3em
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+\pagestyle{plain}
+
+\begin{document}
+
+% ============================ KOP ============================
+\begin{tanpagaris}
+\begin{longtable}{@{}p{0.17\linewidth}p{0.8\linewidth}@{}}
+\logo{2.2cm} & \vspace{0.5cm}\centering \textbf{\large\underline{FORMAT PENGAJUAN JUDUL PENELITIAN}} \\
+\end{longtable}
+\end{tanpagaris}
+
+\begin{tanpagaris}
+\begin{longtable}{@{}p{0.30\linewidth}p{0.04\linewidth}p{0.58\linewidth}@{}}
+NPM / NAMA & : & …………………… / ……………………… \\[4pt]
+NO. HP & : & ……………………………………………… \\[4pt]
+TANGGAL PENGAJUAN & : & ……………………………………………… \\
+\end{longtable}
+\end{tanpagaris}
+
+Dengan ini mengajukan judul penelitian/skripsi/tugas akhir dengan judul:
+
+\usulan{1}
+\usulan{2}
+\usulan{3}
+
+% ============================ VERIFIKASI ============================
+\begin{halamanbaru}\end{halamanbaru}
+\textbf{HASIL DARI VERIFIKASI:}
+
+\begin{longtable}{|p{0.95\linewidth}|}
+\hline
+\textbf{\underline{Di isi oleh Ka. Prodi / Dosen Verifikator Judul Penelitian:}}\newline ~\newline ~\newline ~\newline ~\newline ~ \\
+\hline
+\end{longtable}
+
+\textbf{Dosen Pembimbing: Di isi oleh Ketua Prodi}
+
+\begin{longtable}{|p{0.95\linewidth}|}
+\hline
+\textbf{\underline{PEMBIMBING I}\ : ………………………………………………}\newline ~\newline \textbf{\underline{PEMBIMBING II}\ : ………………………………………………} \\
+\hline
+\end{longtable}
+
+\begin{kanan}
+Baubau, ……………………… 20…
+
+\textbf{DISETUJUI}\\
+\textbf{KETUA PRODI}
+
+~
+
+~
+
+\KetuaProdi\\
+NIDN. \KetuaProdinidn
+\end{kanan}
+
+\end{document}

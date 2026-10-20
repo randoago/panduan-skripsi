@@ -1,0 +1,7 @@
+# Dibaca otomatis oleh latexmk (termasuk saat dipanggil dari VS Code / TeXstudio / Overleaf-lokal).
+# Menjadikan folder ../common bagian dari jalur pencarian gaya (skripsi.sty dkk.) dan memakai XeLaTeX.
+$ENV{'TEXINPUTS'} = '../common//:' . ($ENV{'TEXINPUTS'} // '');
+$pdf_mode = 5;                                   # 5 = xelatex
+$xelatex  = 'xelatex -interaction=nonstopmode -file-line-error %O %S';
+$pdflatex = 'xelatex -interaction=nonstopmode -file-line-error %O %S';   # bila editor memaksa opsi -pdf
+$bibtex_use = 0;

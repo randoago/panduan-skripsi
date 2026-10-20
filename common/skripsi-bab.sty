@@ -1,0 +1,68 @@
+% skripsi-bab.sty -- tata letak dokumen berbab (Seminar Hasil, Skripsi) sesuai Pedoman Penulisan Skripsi:
+% A4, Times New Roman 12 pt, margin kiri/atas/kanan/bawah = 4/4/3/3 cm, 1,5 spasi, alinea 1 cm
+% (ukuran disamakan dengan template Proposal; hanya isi tulisannya yang berbeda).
+% Nomor halaman: awal bab di tengah bawah, halaman berikutnya di kanan atas.
+% Hanya dipakai LaTeX (pandoc tidak membaca berkas ini).
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{skripsi-bab}[2026/10/20 Tata letak dokumen berbab FT UM Buton]
+\RequirePackage[a4paper,left=4cm,right=3cm,top=4cm,bottom=3cm]{geometry}
+\RequirePackage{tocloft}
+
+\setstretch{1.43}                      % setara "1,5 spasi" di Microsoft Word
+\setlength{\parindent}{1cm}
+\setlength{\parskip}{0pt}
+\hyphenpenalty=10000 \exhyphenpenalty=10000 \emergencystretch=4em
+\setlist{nosep,leftmargin=1cm,itemsep=0pt,topsep=0pt}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+\counterwithin{figure}{chapter}   % nomor gambar/tabel = nomor bab . urutan di bab itu (Gambar 1.1, Tabel 2.3)
+\counterwithin{table}{chapter}
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
+\renewcommand{\thechapter}{\Roman{chapter}}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+
+\titleformat{\chapter}[display]{\centering\bfseries\fontsize{14}{17}\selectfont\singlespacing}{BAB \thechapter}{12pt}{}
+\titleformat{name=\chapter,numberless}[block]{\centering\bfseries\fontsize{14}{17}\selectfont\singlespacing}{}{0pt}{}
+\titlespacing{\chapter}{0pt}{0pt}{24pt}
+\titleformat{\section}{\bfseries\singlespacing}{\thesection}{1em}{}
+\titleformat{\subsection}{\bfseries\singlespacing}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\itshape\singlespacing}{\thesubsubsection}{1em}{}
+\titlespacing{\section}{0pt}{18pt}{12pt}
+\titlespacing{\subsection}{0pt}{18pt}{12pt}
+\titlespacing{\subsubsection}{0pt}{12pt}{6pt}
+
+\renewcommand{\arraystretch}{1.2}
+\captionsetup{font=singlespacing,labelsep=period,skip=6pt}
+\captionsetup[table]{justification=raggedright,singlelinecheck=false,position=above}
+\captionsetup[figure]{justification=centering}
+\setlength{\LTpre}{6pt}\setlength{\LTpost}{6pt}
+
+% nomor halaman
+\setlength{\headheight}{14.5pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+\fancypagestyle{isi}{\fancyhf{}\fancyhead[R]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+\pagestyle{plain}
+
+% daftar isi / tabel / gambar
+\renewcommand{\cftchapfont}{\bfseries}
+\renewcommand{\cftchappagefont}{\bfseries}
+\renewcommand{\cftchappresnum}{BAB~}
+\setlength{\cftchapnumwidth}{4.6em}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\setlength{\cftbeforechapskip}{8pt}
+\setlength{\cftbeforesecskip}{3pt}
+\setlength{\cftbeforesubsecskip}{2pt}
+\setlength{\cftsecindent}{0pt}
+\setlength{\cftsecnumwidth}{3em}
+\setlength{\cftsubsecindent}{3em}
+\setlength{\cftsubsecnumwidth}{3.6em}
+\setlength{\cfttabindent}{0pt}\setlength{\cfttabnumwidth}{3.2em}
+\setlength{\cftfigindent}{0pt}\setlength{\cftfignumwidth}{3.2em}
+\renewcommand{\cfttabpresnum}{Tabel~}\renewcommand{\cftfigpresnum}{Gambar~}
+\setlength{\cfttabnumwidth}{5.6em}\setlength{\cftfignumwidth}{5.6em}
+
+\newenvironment{daftartabel}
+  {\chapter*{DAFTAR TABEL}\addcontentsline{toc}{chapter}{DAFTAR TABEL}\begin{singlespace}\makeatletter\@starttoc{lot}\makeatother\end{singlespace}}{}
+\newenvironment{daftargambar}
+  {\chapter*{DAFTAR GAMBAR}\addcontentsline{toc}{chapter}{DAFTAR GAMBAR}\begin{singlespace}\makeatletter\@starttoc{lof}\makeatother\end{singlespace}}{}
