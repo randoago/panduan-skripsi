@@ -49,7 +49,16 @@
 \renewcommand{\cftchappagefont}{\bfseries}
 \renewcommand{\cftchappresnum}{BAB~}
 \setlength{\cftchapnumwidth}{4.6em}
-\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftchapdotsep}}
+% titik-titik penuntun daftar isi/tabel/gambar: rapat dan seragam di semua tingkat (bawaan 4,5; makin kecil makin rapat)
+\renewcommand{\cftdotsep}{1.6}
+\renewcommand{\cftpartdotsep}{\cftdotsep}\renewcommand{\cftchapdotsep}{\cftdotsep}
+\renewcommand{\cftsecdotsep}{\cftdotsep}\renewcommand{\cftsubsecdotsep}{\cftdotsep}
+\renewcommand{\cftsubsubsecdotsep}{\cftdotsep}
+\renewcommand{\cfttabdotsep}{\cftdotsep}\renewcommand{\cftfigdotsep}{\cftdotsep}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftsecdotsep}}\renewcommand{\cftsubsecleader}{\cftdotfill{\cftsubsecdotsep}}
+\renewcommand{\cftsubsubsecleader}{\cftdotfill{\cftsubsubsecdotsep}}
+\renewcommand{\cfttableader}{\cftdotfill{\cfttabdotsep}}\renewcommand{\cftfigleader}{\cftdotfill{\cftfigdotsep}}
 \setlength{\cftbeforechapskip}{8pt}
 \setlength{\cftbeforesecskip}{3pt}
 \setlength{\cftbeforesubsecskip}{2pt}
