@@ -1,0 +1,44 @@
+% Bab I  Pendahuluan
+\chapter{PENDAHULUAN}
+
+\section{Latar Belakang}
+Perkembangan layanan data seluler, seperti video bergerak, konferensi daring, dan komputasi awan, mendorong peningkatan kebutuhan kapasitas dan mutu layanan jaringan akses radio. Jaringan \textit{Long Term Evolution} (LTE) menjadi salah satu teknologi yang banyak digunakan karena menyediakan laju data tinggi dan latensi rendah (Ghosh et al., 2010; Dahlman et al., 2011).
+
+Pada jaringan LTE, sumber daya radio pada sisi \textit{downlink} dibagi menjadi satuan \textit{resource block} (RB) yang dialokasikan kepada pengguna oleh penjadwal paket di eNodeB pada setiap interval transmisi 1 milidetik (Dahlman et al., 2011). Pemilihan algoritma penjadwalan menentukan bagaimana RB dibagikan sehingga berpengaruh langsung terhadap \textit{throughput} dan keadilan layanan antarpengguna (Capozzi et al., 2013).
+
+Berbagai algoritma penjadwalan telah diusulkan, antara lain \textit{Round Robin} (RR), \textit{Proportional Fair} (PF), dan \textit{Maximum Carrier-to-Interference} (Max C/I). Kajian pustaka dan perbandingan skema penjadwalan menunjukkan bahwa setiap algoritma memiliki karakteristik yang berbeda (Andrews, 2007; AlQahtani \& Alhassany, 2013), dan kebutuhan penjadwalan juga berbeda pada penerapan tertentu, misalnya jaringan listrik cerdas yang menuntut penjadwalan waktu nyata (Xu \& Fischione, 2012).
+
+Meskipun demikian, kinerja setiap algoritma sangat bergantung pada skenario, khususnya jumlah pengguna dan kondisi kanal. Oleh karena itu diperlukan kajian kuantitatif yang membandingkan ketiga algoritma pada skenario yang sama dan terkendali. Simulator jaringan ns-3 menyediakan modul LTE beserta ketiga penjadwal tersebut sehingga memungkinkan perbandingan yang dapat diulang (ns-3 Consortium, t.t.). Penelitian ini membandingkan kinerja RR, PF, dan Max C/I pada jaringan LTE dengan jumlah pengguna 10 sampai 50 menggunakan simulator ns-3.
+
+\section{Rumusan Masalah}
+Berdasarkan latar belakang tersebut, rumusan masalah penelitian ini adalah:
+\begin{enumerate}
+\item Bagaimana \textit{throughput} total jaringan LTE pada algoritma penjadwalan RR, PF, dan Max C/I dengan jumlah pengguna 10 sampai 50?
+\item Bagaimana tingkat keadilan (\textit{fairness}) antarpengguna pada ketiga algoritma tersebut?
+\item Algoritma penjadwalan manakah yang memberikan kompromi terbaik antara \textit{throughput} dan \textit{fairness}?
+\end{enumerate}
+
+\section{Tujuan Penelitian}
+Tujuan penelitian ini adalah:
+\begin{enumerate}
+\item mengukur \textit{throughput} total jaringan LTE pada algoritma RR, PF, dan Max C/I;
+\item mengukur indeks \textit{fairness} Jain antarpengguna pada ketiga algoritma;
+\item menentukan algoritma dengan kompromi terbaik antara \textit{throughput} dan \textit{fairness}.
+\end{enumerate}
+
+\section{Manfaat Penelitian}
+Manfaat teoretis penelitian ini adalah menambah bukti kuantitatif tentang karakteristik algoritma penjadwalan paket LTE pada variasi jumlah pengguna. Manfaat praktisnya adalah menjadi bahan pertimbangan bagi perancang dan operator jaringan dalam memilih algoritma penjadwalan, serta menjadi rujukan bagi mahasiswa yang mempelajari simulasi jaringan seluler.
+
+\section{Batasan Masalah}
+Penelitian ini dibatasi pada:
+\begin{enumerate}
+\item satu sel (satu eNodeB) dengan lebar pita \textit{downlink} 20 MHz;
+\item trafik \textit{downlink} berupa aliran UDP dengan laju konstan;
+\item tiga algoritma penjadwalan, yaitu RR, PF, dan Max C/I;
+\item evaluasi melalui simulasi pada ns-3, tanpa pengujian pada perangkat nyata.
+\end{enumerate}
+
+\section{Sistematika Penulisan}
+Proposal ini terdiri atas tiga bab. Bab I berisi pendahuluan. Bab II berisi tinjauan pustaka. Bab III berisi metode penelitian beserta jadwal pelaksanaan.
+
+Seluruh angka, nama pengguna, dan alamat pada contoh ini fiktif dan hanya dibuat untuk memperagakan format penulisan.

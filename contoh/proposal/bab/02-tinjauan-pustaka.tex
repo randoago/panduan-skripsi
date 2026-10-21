@@ -1,0 +1,68 @@
+% Bab II  Tinjauan Pustaka
+\chapter{TINJAUAN PUSTAKA}
+
+\section{Penelitian Terdahulu}
+AlQahtani dan Alhassany (2013) membandingkan beberapa skema penjadwalan pada jaringan LTE untuk melihat pengaruh pemilihan skema terhadap kinerja jaringan. Capozzi et al. (2013) menyusun survei mengenai isu rancangan utama penjadwalan paket \textit{downlink} pada jaringan seluler LTE, termasuk kriteria kinerja yang menjadi dasar perbandingan algoritma. Xu dan Fischione (2012) mengkaji penjadwalan waktu nyata pada LTE untuk jaringan listrik cerdas, yang menunjukkan bahwa kebutuhan aplikasi memengaruhi pilihan penjadwal. Andrews (2007) menyajikan tinjauan teori penjadwalan pada jaringan data nirkabel yang menjadi landasan banyak algoritma penjadwalan saat ini.
+
+\needspace{9cm}
+Ringkasan penelitian terdahulu dan perbedaannya dengan penelitian ini disajikan pada Tabel 2.1.
+
+\begin{singlespace}
+\begin{longtable}{|p{0.22\linewidth}|p{0.34\linewidth}|p{0.32\linewidth}|}
+\caption{Perbandingan penelitian terdahulu dengan penelitian ini}\\
+\hline
+\textbf{Peneliti (tahun)} & \textbf{Fokus penelitian} & \textbf{Perbedaan dengan penelitian ini} \\
+\hline
+AlQahtani dan Alhassany (2013) & Perbandingan beberapa skema penjadwalan LTE & Penelitian ini membandingkan RR, PF, dan Max C/I secara kuantitatif pada variasi 10--50 pengguna di ns-3 \\
+\hline
+Capozzi et al. (2013) & Survei isu rancangan penjadwalan paket \textit{downlink} LTE & Penelitian ini bersifat eksperimen simulasi, bukan survei \\
+\hline
+Xu dan Fischione (2012) & Penjadwalan waktu nyata LTE untuk jaringan listrik cerdas & Penelitian ini memakai trafik data umum, bukan trafik jaringan listrik cerdas \\
+\hline
+Andrews (2007) & Tinjauan teori penjadwalan jaringan data nirkabel & Penelitian ini menerapkan teori tersebut pada skenario LTE tertentu \\
+\hline
+\end{longtable}
+\end{singlespace}
+
+\section{Landasan Teori}
+
+\subsection{Jaringan LTE dan Penjadwalan Paket}
+LTE menggunakan \textit{Orthogonal Frequency Division Multiple Access} (OFDMA) pada sisi \textit{downlink}. Sumber daya radio dibagi dalam domain waktu dan frekuensi menjadi RB; pada lebar pita 20 MHz tersedia 100 RB yang dapat dialokasikan setiap interval transmisi 1 milidetik (Ghosh et al., 2010; Dahlman et al., 2011). Penjadwal paket di eNodeB memutuskan RB mana yang diberikan kepada pengguna tertentu berdasarkan umpan balik kualitas kanal (CQI) yang dilaporkan pengguna (Dahlman et al., 2011).
+
+\subsection{Algoritma Penjadwalan}
+Algoritma \textit{Round Robin} mengalokasikan sumber daya secara bergiliran kepada setiap pengguna tanpa memperhatikan kondisi kanal, sehingga sederhana dan adil dalam jatah waktu. Algoritma Max C/I selalu memilih pengguna dengan kondisi kanal terbaik pada setiap interval sehingga memaksimalkan \textit{throughput} sistem, tetapi pengguna dengan kanal buruk dapat jarang terlayani. Algoritma \textit{Proportional Fair} memilih pengguna dengan metrik prioritas
+
+\begin{tanpagaris}
+\begin{longtable}{@{}p{0.08\linewidth}p{0.76\linewidth}r@{}}
+ & $m_{i}(t)=\dfrac{r_{i}(t)}{R_{i}(t)}$ & (2.1) \\
+\end{longtable}
+\end{tanpagaris}
+
+dengan nilai:
+
+\begin{tanpagaris}
+\begin{longtable}{@{}p{0.15\linewidth}p{0.05\linewidth}p{0.7\linewidth}@{}}
+$m_{i}(t)$ & = & metrik prioritas pengguna ke-$i$ pada waktu $t$ \\
+$r_{i}(t)$ & = & laju data sesaat yang dapat dicapai pengguna ke-$i$ \\
+$R_{i}(t)$ & = & rata-rata \textit{throughput} pengguna ke-$i$ \\
+\end{longtable}
+\end{tanpagaris}
+
+Rata-rata \textit{throughput} diperbarui secara eksponensial pada setiap interval sehingga pengguna yang lama tidak dilayani memperoleh prioritas lebih tinggi, yang menjadikan PF kompromi antara efisiensi dan keadilan (Capozzi et al., 2013).
+
+\subsection{Metrik Kinerja}
+\textit{Throughput} adalah jumlah data yang berhasil diterima pengguna per satuan waktu dan dinyatakan dalam Mbps. Keadilan antarpengguna diukur dengan indeks \textit{fairness} Jain (Jain, 1991):
+
+\begin{tanpagaris}
+\begin{longtable}{@{}p{0.08\linewidth}p{0.76\linewidth}r@{}}
+ & $J=\dfrac{\left(\sum_{i=1}^{n}x_{i}\right)^{2}}{n\sum_{i=1}^{n}x_{i}^{2}}$ & (2.2) \\
+\end{longtable}
+\end{tanpagaris}
+
+dengan $x_{i}$ adalah \textit{throughput} pengguna ke-$i$ dan $n$ adalah jumlah pengguna. Nilai $J$ berkisar antara $1/n$ (paling tidak adil) dan 1 (paling adil).
+
+\subsection{Simulator ns-3}
+ns-3 adalah simulator jaringan berbasis kejadian diskret yang bersifat terbuka dan dikembangkan untuk penelitian jaringan komunikasi (ns-3 Consortium, t.t.). Modul LTE pada ns-3 menyediakan model eNodeB, perangkat pengguna (UE), kanal radio, serta beberapa penjadwal paket, termasuk RR, PF, dan penjadwal \textit{maximum throughput} yang setara dengan Max C/I.
+
+\section{Kerangka Pikir}
+Kerangka pikir penelitian ini bertolak dari masalah bahwa pemilihan algoritma penjadwalan memengaruhi \textit{throughput} dan keadilan. Berdasarkan landasan teori, ketiga algoritma diperkirakan menempati urutan berbeda pada kedua metrik: Max C/I tertinggi pada \textit{throughput}, RR tertinggi pada keadilan, dan PF di antara keduanya. Dugaan ini diuji melalui simulasi pada ns-3 dengan variasi jumlah pengguna, kemudian hasilnya dianalisis dan dibandingkan.

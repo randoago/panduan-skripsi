@@ -80,6 +80,10 @@ _SAMA_PROPOSAL = dict(body_line=360, first_indent=567, list_line=360, h_sizes=(2
 PROFIL["seminar-hasil"] = dict(PROFIL["pedoman"], tex="seminar-hasil/seminar-hasil.tex", **_SAMA_PROPOSAL)
 PROFIL["skripsi"] = dict(PROFIL["pedoman"], tex="skripsi/skripsi.tex", **_SAMA_PROPOSAL)
 PROFIL["proposal"] = dict(PROFIL["pedoman"], tex="proposal/proposal.tex", **_SAMA_PROPOSAL)   # sama dengan skripsi: BAB I, tiap bab halaman baru
+# dokumen CONTOH terisi (folder contoh/): profil sama dengan dokumen aslinya
+PROFIL["contoh-proposal"] = dict(PROFIL["proposal"], tex="contoh/proposal/proposal.tex")
+PROFIL["contoh-hasil"] = dict(PROFIL["seminar-hasil"], tex="contoh/seminar-hasil/seminar-hasil.tex")
+PROFIL["contoh-skripsi"] = dict(PROFIL["skripsi"], tex="contoh/skripsi/skripsi.tex")
 
 
 # --------------------------------------------------------------------------
@@ -207,7 +211,7 @@ def build_styles(p, default_xml):
 
     # keterangan tabel / gambar
     add(para_style("TableCaption", "Table Caption", "Normal", nxt="Normal", custom=True,
-                   ppr='<w:keepNext/>%s<w:jc w:val="left"/>' % spacing(120, 120, 240)))
+                   ppr='<w:keepNext/>%s<w:jc w:val="center"/>' % spacing(120, 120, 240)))
     add(para_style("ImageCaption", "Image Caption", "Normal", nxt="BodyText", custom=True,
                    ppr='%s<w:jc w:val="center"/>' % spacing(120, 240, 240)))
     add(para_style("CaptionedFigure", "Captioned Figure", "Normal", nxt="ImageCaption", custom=True,

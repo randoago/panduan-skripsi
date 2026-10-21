@@ -5,7 +5,7 @@ Tiga dokumen, masing-masing dapat dibuat sebagai **PDF (LaTeX)** dan **Word (.do
 | Dokumen | Sumber | Isi |
 |---|---|---|
 | Pedoman Penulisan Skripsi | `pedoman/pedoman.tex` | A4, TNR 12, margin 4/3/3/3 cm, 2 spasi |
-| Template Proposal Skripsi | `proposal/proposal.tex` | A4, TNR 12, margin 2/2/2/2,5 cm, 1,5 spasi, sitasi **APA** |
+| Template Proposal Skripsi | `proposal/proposal.tex` | A4, TNR 12, margin 4/4/3/3 cm, 1,5 spasi, sitasi **APA** |
 | Formulir Pengajuan Judul | `formulir/formulir.tex` | A4, Arial 12 |
 | Format Seminar Hasil | `seminar-hasil/seminar-hasil.tex` + `bab/` | Bab I–V, 4/4/3/3 cm, 2 spasi, APA |
 | Format Skripsi | `skripsi/skripsi.tex` + `bab/` | + pengesahan, keaslian, abstrak, kata pengantar, daftar isi/tabel/gambar |

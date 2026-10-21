@@ -27,6 +27,7 @@
 \RequirePackage{needspace}
 \RequirePackage{chngcntr}
 \RequirePackage{caption}
+\RequirePackage{adjustbox}
 \RequirePackage{amsmath}
 \RequirePackage{indentfirst}
 \RequirePackage[protrusion=false]{microtype}   % tanpa tonjolan huruf ke margin
@@ -84,3 +85,7 @@
 
 % ---------- Teks abstrak: satu spasi (di Word: gaya "Abstrak") ----------
 \newenvironment{abstrak}{\begin{singlespace}}{\par\end{singlespace}}
+
+% ---------- Nama pada lembar persetujuan/pengesahan: selalu satu baris ----------
+% Bila nama lebih lebar dari kolomnya, ukurannya diperkecil seperlunya (tidak pernah pindah baris).
+\newcommand{\satubaris}[1]{\adjustbox{max width=\linewidth}{\mbox{#1}}}

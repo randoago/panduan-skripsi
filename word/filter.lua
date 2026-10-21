@@ -137,8 +137,46 @@ local function nomor(n)
 end
 local function akhiran() return (NUMMODE == 'per-bab') and '' or '.' end
 
+-- Nama dosen pada lembar persetujuan/pengesahan harus satu baris: \satubaris{..} menjadi spasi tak-putus
+-- (nbsp) saat dibaca pandoc; di sini ukurannya disesuaikan dengan panjang nama agar muat di kolom.
+local NBSP = '\194\160'
+local function xml_esc(x) return (x:gsub('&', '&amp;'):gsub('<', '&lt;'):gsub('>', '&gt;')) end
+local function shrink_segment(seg)
+  local txt = pandoc.utils.stringify(pandoc.Inlines(seg))
+  if not txt:find('%S' .. NBSP .. '%S') then return nil end
+  for _, el in ipairs(seg) do if el.t == 'Strong' or el.t == 'Emph' then return nil end end
+  local n = pandoc.text.len(txt)
+  local hp = math.floor(5.7 / (0.19 * n) * 24)       -- ukuran setengah-poin; 5,7 cm lebar isi kolom
+  hp = math.max(14, math.min(24, hp))
+  return pandoc.RawInline('openxml', string.format(
+    '<w:r><w:rPr><w:sz w:val="%d"/><w:szCs w:val="%d"/></w:rPr><w:t xml:space="preserve">%s</w:t></w:r>',
+    hp, hp, xml_esc(txt)))
+end
+local function shrink_names_in_block(b)
+  if b.t ~= 'Para' and b.t ~= 'Plain' then return end
+  local out, seg = {}, {}
+  local function flush()
+    if #seg > 0 then
+      local r = shrink_segment(seg)
+      if r then out[#out + 1] = r else for _, e in ipairs(seg) do out[#out + 1] = e end end
+      seg = {}
+    end
+  end
+  for _, el in ipairs(b.content) do
+    if el.t == 'LineBreak' then flush(); out[#out + 1] = el else seg[#seg + 1] = el end
+  end
+  flush()
+  b.content = out
+end
+local function shrink_names(t)
+  local function rows(rs) for _, r in ipairs(rs) do for _, c in ipairs(r.cells) do
+    for _, b in ipairs(c.contents) do shrink_names_in_block(b) end end end end
+  for _, tb in ipairs(t.bodies) do rows(tb.body) end
+end
+
 function Table(t)
   mark_filled_cells(t)
+  shrink_names(t)
   if #t.colspecs == 8 and t.bodies[1] and pandoc.utils.stringify(t.caption.long):match('Jadwal') then
     local w = {0.07, 0.35, 0.098, 0.098, 0.098, 0.098, 0.098, 0.098}
     for i, cs in ipairs(t.colspecs) do t.colspecs[i] = { cs[1], w[i] } end

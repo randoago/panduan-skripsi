@@ -1,0 +1,44 @@
+% =====================================================================
+%  CONTOH TERISI -- SKRIPSI (data fiktif untuk memperagakan format)
+%  Program Studi Rekayasa Sistem Komputer, Fakultas Teknik, UM Buton
+%  Kompilasi PDF : xelatex (lihat menu.sh)   |   Word : pandoc (lihat menu.sh)
+%  Ukuran dan tata letak disamakan dengan template Proposal: A4; margin kiri/atas/kanan/bawah
+%  = 4/4/3/3 cm; Times New Roman 12 pt; 1,5 spasi; sitasi APA edisi ke-7.
+%  Isi dipisah per bab di folder bab/ ; ubah isi di sana.
+% =====================================================================
+\documentclass[12pt,a4paper]{report}
+\usepackage{skripsi}
+\usepackage{skripsi-bab}
+
+% ---------- Data dosen & peran (common/dosen.tex, common/peran.tex) ----------
+\input{../../common/dosen}
+\input{../../common/peran}
+% Peran dosen pada CONTOH ini hanya ilustrasi (tidak mengubah common/peran.tex)
+\renewcommand{\PembimbingI}{\dsnAwaluddin}\renewcommand{\PembimbingInidn}{\nidnAwaluddin}
+\renewcommand{\PembimbingII}{\dsnDarmawan}\renewcommand{\PembimbingIInidn}{\nidnDarmawan}
+\renewcommand{\PengujiI}{\dsnRando}\renewcommand{\PengujiInidn}{\nidnRando}
+\renewcommand{\PengujiII}{\dsnSaidi}\renewcommand{\PengujiIInidn}{\nidnSaidi}
+\providecommand{\satubaris}[1]{\mbox{#1}}   % cadangan (konversi Word); versi PDF ada di skripsi.sty
+
+% ---------- Makro yang ikut dibaca pandoc ----------
+\newcommand{\logo}[1]{\includegraphics[width=#1]{../../gambar/logo-umbuton.png}}
+\newcommand{\babtp}[1]{\chapter*{#1}\addcontentsline{toc}{chapter}{#1}}
+\newcommand{\lampiran}[2]{\babtp{LAMPIRAN #1. #2}\setcounter{figure}{0}\setcounter{table}{0}\renewcommand{\thefigure}{L#1.\arabic{figure}}\renewcommand{\thetable}{L#1.\arabic{table}}}   % nomor gambar/tabel di lampiran: L2.1
+
+\begin{document}
+\input{bab/00-sampul}      % sampul + lembar persetujuan (tanpa nomor halaman)
+\input{bab/00c-pengesahan}  % halaman pengesahan
+\input{bab/00d-keaslian}    % pernyataan keaslian
+\input{bab/00a-abstrak}     % abstrak (angka romawi)
+\input{bab/00e-kata-pengantar}
+\input{bab/00b-daftar-isi}  % daftar isi/tabel/gambar; setelah ini nomor halaman mulai dari 1
+
+\input{bab/01-pendahuluan}
+\input{bab/02-tinjauan-pustaka}
+\input{bab/03-metode-penelitian}
+\input{bab/04-hasil-pembahasan}
+\input{bab/05-kesimpulan-saran}
+\input{bab/06-daftar-pustaka}
+\input{bab/07-lampiran}
+
+\end{document}
