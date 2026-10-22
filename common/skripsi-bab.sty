@@ -64,6 +64,7 @@
 \setlength{\cftbeforesubsecskip}{2pt}
 \setlength{\cftsecindent}{0pt}
 \setlength{\cftsecnumwidth}{3em}
+\setlength{\cftbeforetabskip}{3pt}\setlength{\cftbeforefigskip}{3pt}   % jarak antarbaris daftar tabel/gambar = daftar isi
 \setlength{\cftsubsecindent}{3em}
 \setlength{\cftsubsecnumwidth}{3.6em}
 \setlength{\cfttabindent}{0pt}\setlength{\cfttabnumwidth}{3.2em}
@@ -71,7 +72,21 @@
 \renewcommand{\cfttabpresnum}{Tabel~}\renewcommand{\cftfigpresnum}{Gambar~}
 \setlength{\cfttabnumwidth}{5.6em}\setlength{\cftfignumwidth}{5.6em}
 
+% Daftar tabel/gambar: buang jarak 10pt tambahan dari kelas dokumen setiap berganti bab,
+% sehingga semua baris berjarak sama (3pt di atas baris) dan serasi dengan baris subbab pada daftar isi.
+\newcommand{\tanpajarakbab}{\let\addvspaceasli\addvspace
+  \renewcommand{\addvspace}[1]{\ifdim##1=10pt\else\addvspaceasli{##1}\fi}}
 \newenvironment{daftartabel}
-  {\chapter*{DAFTAR TABEL}\addcontentsline{toc}{chapter}{DAFTAR TABEL}\begin{singlespace}\makeatletter\@starttoc{lot}\makeatother\end{singlespace}}{}
+  {\chapter*{DAFTAR TABEL}\addcontentsline{toc}{chapter}{DAFTAR TABEL}\begin{singlespace}\begingroup\tanpajarakbab\vspace{5pt}\makeatletter\@starttoc{lot}\makeatother\endgroup\end{singlespace}}{}
 \newenvironment{daftargambar}
-  {\chapter*{DAFTAR GAMBAR}\addcontentsline{toc}{chapter}{DAFTAR GAMBAR}\begin{singlespace}\makeatletter\@starttoc{lof}\makeatother\end{singlespace}}{}
+  {\chapter*{DAFTAR GAMBAR}\addcontentsline{toc}{chapter}{DAFTAR GAMBAR}\begin{singlespace}\begingroup\tanpajarakbab\vspace{5pt}\makeatletter\@starttoc{lof}\makeatother\endgroup\end{singlespace}}{}
+
+% Daftar lampiran (Pedoman Bab III: halaman daftar lampiran setelah daftar gambar)
+\newlistof{lamp}{lop}{DAFTAR LAMPIRAN}
+\setlength{\cftlampindent}{0pt}\setlength{\cftlampnumwidth}{6.2em}
+\renewcommand{\cftlamppresnum}{Lampiran~}
+\setlength{\cftbeforelampskip}{3pt}
+\renewcommand{\cftlampdotsep}{\cftdotsep}
+\renewcommand{\cftlampleader}{\cftdotfill{\cftlampdotsep}}
+\newenvironment{daftarlampiran}
+  {\chapter*{DAFTAR LAMPIRAN}\addcontentsline{toc}{chapter}{DAFTAR LAMPIRAN}\begin{singlespace}\begingroup\tanpajarakbab\vspace{5pt}\makeatletter\@starttoc{lop}\makeatother\endgroup\end{singlespace}}{}

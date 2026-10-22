@@ -23,7 +23,7 @@
 % ---------- Makro yang ikut dibaca pandoc ----------
 \newcommand{\logo}[1]{\includegraphics[width=#1]{../../gambar/logo-umbuton.png}}
 \newcommand{\babtp}[1]{\chapter*{#1}\addcontentsline{toc}{chapter}{#1}}
-\newcommand{\lampiran}[2]{\babtp{LAMPIRAN #1. #2}\setcounter{figure}{0}\setcounter{table}{0}\renewcommand{\thefigure}{L#1.\arabic{figure}}\renewcommand{\thetable}{L#1.\arabic{table}}}   % nomor gambar/tabel di lampiran: L2.1
+\newcommand{\lampiran}[2]{\babtp{LAMPIRAN #1. #2}\addcontentsline{lop}{lamp}{\protect\numberline{#1}#2}\setcounter{figure}{0}\setcounter{table}{0}\renewcommand{\thefigure}{L#1.\arabic{figure}}\renewcommand{\thetable}{L#1.\arabic{table}}}   % nomor gambar/tabel di lampiran: L2.1
 
 \begin{document}
 \input{bab/00-sampul}      % sampul + lembar persetujuan (tanpa nomor halaman)

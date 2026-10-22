@@ -27,6 +27,7 @@ panduan-skripsi/
 │   └── bab/
 ├── pedoman/pedoman.tex      <- pedoman penulisan skripsi
 ├── formulir/formulir.tex    <- formulir pengajuan judul
+├── contoh/                  <- contoh terisi (proposal, seminar hasil, skripsi) + PDF/Word di contoh/hasil
 ├── common/                  <- gaya & data bersama (jarang diubah)
 │   ├── skripsi.sty, skripsi-bab.sty   tata letak
 │   ├── dosen.tex                      daftar dosen
@@ -110,6 +111,7 @@ Contoh `skripsi/skripsi.tex` (dipersingkat; proposal dan seminar hasil serupa):
   \begin{daftarisi}\end{daftarisi}
   \begin{daftartabel}\end{daftartabel}
   \begin{daftargambar}\end{daftargambar}
+  \begin{daftarlampiran}\end{daftarlampiran}   % skripsi dan seminar hasil
   \begin{akhirdepan}\end{akhirdepan}   % halaman isi mulai dari angka 1
   \pagestyle{isi}
   \input{bab/01-pendahuluan}
@@ -296,28 +298,85 @@ Gunakan *Cari & Ganti* di editor agar semua kemunculan terganti sekaligus.
 
 Daftar dosen ada di `common/dosen.tex` (nama, gelar, NIDN). Peran tiap dosen diatur **sekali** dan otomatis dipakai di sampul, lembar persetujuan/pengesahan, kata pengantar, dan abstrak semua dokumen.
 
+## 7.1 Daftar dosen
+
+Satu dosen memiliki dua makro: `\dsn` + kunci (nama dan gelar) dan `\nidn` + kunci (NIDN). *Kunci* adalah singkatan yang dipakai di `peran.tex`. Nomor pada kolom pertama adalah nomor yang diketik di menu pengaturan peran (urutannya mengikuti isi `dosen.tex`).
+
+| No | Nama dan gelar | NIDN | Kunci |
+|---|---------------------------------------------|------------------|-----------|
+| 1 | Muhammad Awaluddin, S.Kom., M.Kom | 0909038201 | Awaluddin |
+| 2 | Darmawan, S.Kom., M.Kom | 0911048204 | Darmawan |
+| 3 | Rando, S.Kom., M.Eng. | 0911069501 | Rando |
+| 4 | La Ode Muhammad Saidi, S.Si., M.Kom | 0913038905 | Saidi |
+| 5 | Didin Adri, S.Si., M.Sc | 0930088802 | Didin |
+| 6 | Muhammad Hibrian Wiwi, S.T., M.Kom | 0930129003 | Hibrian |
+| 7 | Muhammad Abdur Rasyid Asruddin, S.T., M.Kom | 6641774675130242 | Rasyid |
+| 8 | Agusman, S.T., M.M (Dekan Fakultas Teknik) | 0917088206 | Agusman |
+
+Contoh pemakaian kunci: untuk Awaluddin makro namanya `\dsnAwaluddin` dan makro NIDN-nya `\nidnAwaluddin`.
+
+Dekan Fakultas Teknik sudah terisi tetap (Agusman, S.T., M.M) di `peran.tex`. Bila ada pergantian dekan, tambahkan dosen barunya (7.4) lalu pilih lewat menu.
+
+## 7.2 Daftar peran
+
+Ada enam peran. Nama makronya dipakai di berkas `.tex`, dan di menu muncul dengan nama biasa:
+
+| Peran di menu | Makro nama | Makro NIDN | Dipakai di |
+|---|---|---|---|
+| Pembimbing I | `\PembimbingI` | `\PembimbingInidn` | lembar persetujuan, pengesahan, kata pengantar |
+| Pembimbing II | `\PembimbingII` | `\PembimbingIInidn` | lembar persetujuan, pengesahan, kata pengantar |
+| Penguji I | `\PengujiI` | `\PengujiInidn` | halaman pengesahan, kata pengantar |
+| Penguji II | `\PengujiII` | `\PengujiIInidn` | halaman pengesahan, kata pengantar |
+| Ketua Program Studi | `\KetuaProdi` | `\KetuaProdinidn` | halaman pengesahan, kata pengantar |
+| Dekan Fakultas Teknik | `\Dekan` | `\Dekannidn` | halaman pengesahan, kata pengantar pedoman |
+
+Peran yang belum dipilih tampil sebagai titik-titik isian (……) sehingga dapat ditulis tangan.
+
+## 7.3 Mengatur peran
+
 **Cara termudah:**
 
 ```bash
 ./menu.sh peran
 ```
 
-(atau menu nomor **7**). Ketik nomor dosen untuk tiap peran: Pembimbing I, Pembimbing II, Penguji I, Penguji II, Ketua Program Studi, Dekan. Tekan Enter untuk membiarkan, `0` untuk mengosongkan. Setelah itu buat ulang dokumen (menu PDF/Word).
+(atau menu nomor **7** pada menu interaktif). Program menampilkan daftar dosen bernomor, lalu menanyakan satu per satu: Pembimbing I, Pembimbing II, Penguji I, Penguji II, Ketua Program Studi, dan Dekan. Ketik nomor dosen, tekan Enter untuk membiarkan pilihan yang ada, atau ketik `0` untuk mengosongkan. Berkas `common/peran.tex` ditulis ulang otomatis. Setelah itu buat ulang dokumen (menu PDF/Word).
 
-**Cara manual:** edit `common/peran.tex`:
+**Cara manual:** edit `common/peran.tex`. Isi dengan kunci dosen dari tabel di atas. Contoh, Pembimbing I = Muhammad Awaluddin dan Pembimbing II = Darmawan:
 
 ```latex
 \newcommand{\PembimbingI}{\dsnAwaluddin}\newcommand{\PembimbingInidn}{\nidnAwaluddin}
+\newcommand{\PembimbingII}{\dsnDarmawan}\newcommand{\PembimbingIInidn}{\nidnDarmawan}
 ```
 
-**Menambah dosen baru:** salin dua baris di `common/dosen.tex` dengan kunci baru:
+Nama pada lembar persetujuan dan pengesahan selalu tampil satu baris; bila terlalu panjang, ukuran hurufnya diperkecil otomatis (tidak pindah baris).
+
+## 7.4 Menambah dosen baru
+
+Salin dua baris di `common/dosen.tex` dengan kunci baru (tanpa spasi atau tanda baca), lalu isi nama dan NIDN:
 
 ```latex
 \newcommand{\dsnBudi}{Budi Santoso, S.T., M.T.}
 \newcommand{\nidnBudi}{0912345678}
 ```
 
-# 8. Aturan format yang sudah otomatis
+Dosen baru otomatis muncul di daftar menu pengaturan peran (di urutan paling bawah), dan kuncinya dapat dipakai di `peran.tex`. Perbarui juga tabel 7.1 pada panduan ini bila perlu.
+
+## 7.5 Peran pada folder contoh
+
+Dokumen pada folder `contoh/` mengatur peran dosennya sendiri (hanya ilustrasi) lewat `\renewcommand` di berkas utamanya, sehingga `common/peran.tex` tidak berubah. Untuk dokumen sungguhan, cukup atur peran di `common/peran.tex` seperti di atas.
+
+# 8. Formulir pengajuan judul
+
+`formulir/formulir.tex` berisi formulir pengajuan judul penelitian (Arial 12). Strukturnya:
+
+- **Kop dan identitas:** logo, judul formulir, lalu NPM/Nama, No. HP, dan Tanggal Pengajuan.
+- **Tiga usulan judul**, masing-masing dibuat oleh satu perintah: `\usulan{1}`, `\usulan{2}`, `\usulan{3}`. Tiap usulan berupa **satu tabel kotak penuh** berisi: judul usulan, petunjuk penulisan judul (maksimum 15 kata), lalu enam bagian: (1) Objek/Tempat Penelitian, (2) Latar Belakang Masalah, (3) Rumusan Masalah, (4) Tujuan Penelitian, (5) Penelitian Terkait, dan (6) Daftar Pustaka. Setiap bagian terdiri dari satu baris judul (tebal) dan satu baris isian.
+- **Hasil verifikasi:** kotak untuk Ketua Prodi/dosen verifikator, kotak dosen pembimbing I dan II, serta tanda tangan Ketua Prodi (nama dan NIDN diambil dari `common/peran.tex`).
+
+Tiap usulan memakai halaman sendiri (`halamanbaru`) sehingga tidak ada kotak yang terpotong antarhalaman. Untuk mengubah teks petunjuk, edit definisi `\usulan` di bagian atas berkas; ketiga usulan ikut berubah. Membuatnya: `./menu.sh semua formulir`.
+
+# 9. Aturan format yang sudah otomatis
 
 Anda tidak perlu mengatur hal-hal ini secara manual:
 
@@ -326,15 +385,15 @@ Anda tidak perlu mengatur hal-hal ini secara manual:
 | Kertas | A4 |
 | Margin (proposal, seminar hasil, skripsi, pedoman) | kiri 4, atas 4, kanan 3, bawah 3 cm |
 | Huruf | Times New Roman 12 pt |
-| Spasi isi | proposal, seminar hasil, skripsi: 1,5 spasi (pedoman: 2 spasi); judul tabel/gambar, lampiran, daftar pustaka 1 spasi |
-| Alinea | menjorok 1 cm (pedoman: 1,27 cm), rata kanan-kiri |
-| Nomor halaman | awal bab: tengah bawah; halaman berikutnya: kanan atas; bagian depan angka romawi |
+| Spasi isi | pedoman, proposal, seminar hasil, skripsi: 1,5 spasi; judul tabel/gambar, lampiran, daftar pustaka 1 spasi |
+| Alinea | menjorok 1 cm, rata kanan-kiri |
+| Nomor halaman | sampul, lembar persetujuan, pengesahan, dan pernyataan keaslian: tanpa nomor; abstrak sampai daftar lampiran: angka romawi (tengah bawah); isi: angka Arab, awal bab tengah bawah, halaman berikutnya kanan atas |
 | Penomoran | bab (I, II, ...), subbab (1.1, 1.1.1), tabel dan gambar per bab (Gambar 1.1, Tabel 2.3) |
 | Daftar isi, tabel, gambar | dibuat otomatis |
 
 Proposal, seminar hasil, dan skripsi memakai ukuran, sampul, halaman depan, dan gaya bab yang sama; yang berbeda hanya tulisannya. Judul bab ditulis "BAB I" di tengah lalu judulnya, dan **setiap bab mulai di halaman baru** (halaman pertama bab bernomor tengah bawah, halaman berikutnya kanan atas).
 
-# 9. Konversi ke Word
+# 10. Konversi ke Word
 
 Setelah memilih **Convert ke Word**, berkas `.docx` muncul di `hasil/`. Perhatikan:
 
@@ -350,7 +409,7 @@ Setelah memilih **Convert ke Word**, berkas `.docx` muncul di `hasil/`. Perhatik
 - Gambar yang dibuat dengan kode (TikZ/PGF) tidak ikut ke Word; simpan sebagai `.png` terlebih dahulu.
 - Perintah pengatur tata letak murni (`\vspace`, `\hspace`, `\newpage`) tidak berpengaruh di Word. Gunakan lingkungan khusus di bawah ini.
 
-# 10. Lingkungan khusus yang tersedia
+# 11. Lingkungan khusus yang tersedia
 
 | Lingkungan | Fungsi |
 |---|---|
@@ -360,11 +419,12 @@ Setelah memilih **Convert ke Word**, berkas `.docx` muncul di `hasil/`. Perhatik
 | `tanpagaris` | tabel tanpa garis (tanda tangan, data) |
 | `tabelpusat` | semua kolom tabel di dalamnya rata tengah (khusus Word) |
 | `ruang` | jarak kosong vertikal, mis. `\begin{ruang}{2}\end{ruang}` = 2 cm |
-| `daftarisi`, `daftartabel`, `daftargambar` | membuat daftar otomatis |
+| `daftarisi`, `daftartabel`, `daftargambar`, `daftarlampiran` | membuat daftar otomatis (daftar lampiran diisi dari perintah `\lampiran{n}{judul}`) |
+| `\satubaris{nama}` | nama (dosen) selalu satu baris; bila kepanjangan, huruf diperkecil otomatis |
 | `akhirsampul`, `akhirdepan` | penanda pergantian bagian (nomor halaman) |
 | `halamanbaru` | pindah halaman (di Word jadi *page break*) |
 
-# 11. Pemecahan masalah
+# 12. Pemecahan masalah
 
 | Gejala | Penyebab / solusi |
 |---|---|
@@ -374,17 +434,68 @@ Setelah memilih **Convert ke Word**, berkas `.docx` muncul di `hasil/`. Perhatik
 | `Undefined control sequence` | salah ketik perintah, atau lupa `\` pada karakter khusus (bagian 5.3). Lihat nomor baris pada pesan galat. |
 | Kalimat tiba-tiba terpotong | ada `%` tanpa `\` di baris itu. Tulis `\%`. |
 | Daftar isi kosong / nomor halaman salah | jalankan pembuatan PDF sekali lagi (daftar butuh dua putaran; menu sudah mengulang otomatis). |
-| Daftar isi di Word hanya tulisan "Klik kanan..." | belum diperbarui; lihat bagian 9 butir 1. |
+| Daftar isi di Word hanya tulisan "Klik kanan..." | belum diperbarui; lihat bagian 10 butir 1. |
 | Gambar tidak muncul | periksa nama dan lokasi berkas di `gambar/`; nama berkas peka huruf besar-kecil. |
-| Teks tabel hilang di Word | hindari `>{\centering...}`, lihat bagian 9. |
+| Teks tabel hilang di Word | hindari `>{\centering...}`, lihat bagian 10. |
 | Menu: "gagal membuat PDF" | buka `build/<dokumen>-latex.log`; galat pertama diawali tanda `!`. |
 | Menu: "gagal membuat Word" | buka `build/<dokumen>-word.log`. |
 | Hasil tidak berubah | pastikan berkas yang diedit adalah berkas bab yang dipanggil `\input`, lalu buat ulang dokumen. |
 
-# 12. Ringkasan alur kerja
+# 13. Ringkasan alur kerja
 
 1. Isi sampul dan data (bagian 6); atur dosen/peran (`./menu.sh peran`).
 2. Tulis isi tiap bab di `bab/NN-....tex` (bagian 5).
 3. Simpan gambar di `gambar/`.
 4. `./menu.sh semua skripsi` → periksa `hasil/skripsi.pdf` dan `hasil/skripsi.docx`.
 5. Perbaiki di `.tex`, ulangi langkah 4 sampai siap dikumpulkan.
+
+# 14. Hasil analisis dokumen asli (kesesuaian format)
+
+Dokumen asli yang dianalisis: *Pedoman Penulisan Skripsi*, *Template Proposal Skripsi*, dan *Formulir Pengajuan Judul* (berkas Word/PDF dari Prodi). Pengukuran dilakukan pada PDF-nya (ukuran kertas, margin, jenis huruf, jarak baris) lalu dibandingkan dengan aturan yang tertulis di Pedoman. Hasilnya dipakai untuk menetapkan format di folder ini.
+
+## 14.1 Temuan pada dokumen asli
+
+| No | Dokumen asli | Temuan | Keputusan pada template ini |
+|--|-------|----------------------------|------------------------------|
+| 1 | Pedoman | Margin tertulis kiri 4, kanan 3, bawah 3, **atas 3** cm | Margin **4/4/3/3** (kiri/atas/kanan/bawah) pada semua dokumen |
+| 2 | Pedoman | Jarak baris teks tertulis **2 spasi** (isi PDF-nya memang 2 spasi), sedangkan Template Proposal memakai **1,5 spasi** | **1,5 spasi** untuk Pedoman, Proposal, Seminar Hasil, Skripsi; judul tabel/gambar, abstrak, daftar, daftar pustaka, lampiran 1 spasi |
+| 3 | Pedoman | Alinea "tab stop 1,5" tanpa satuan jelas | Alinea menjorok **1 cm** |
+| 4 | Pedoman | Penomoran gambar "Gambar 1." (urut), sedangkan Template Proposal "Tabel 2.1 / Gambar 2.1" (per bab) | Nomor **per bab** (Gambar 1.1, Tabel 2.3); lampiran memakai awalan lampiran (Tabel L2.1) |
+| 5 | Pedoman | Penulisan mahasiswa memakai "NIM" | Diganti **NPM** di semua dokumen |
+| 6 | Pedoman | Tidak ada aturan nomor halaman (hanya urutan lembar); judul tabel tidak ditegaskan posisinya | Ditetapkan: sampul, persetujuan, pengesahan, keaslian tanpa nomor; abstrak sampai daftar lampiran romawi; isi arab; awal bab tengah bawah, halaman berikutnya kanan atas; judul tabel **atas-tengah**, judul gambar **bawah-tengah** |
+| 7 | Pedoman | Daftar urutan lembar memuat **Daftar Lampiran**, tetapi contohnya tidak diwajibkan di template | **Daftar Lampiran** ditambahkan pada Skripsi dan Seminar Hasil (dibuat otomatis dari `\lampiran{n}{judul}`) |
+| 8 | Pedoman | Daftar pustaka bergaya Harvard lama ("Nama. Tahun. Judul."); Template Proposal menyebut **IEEE** | **APA edisi ke-7** (penulis--tahun) untuk semua dokumen, lengkap dengan tanggal akses untuk sumber web |
+| 9 | Pedoman | Istilah tidak seragam: "Halaman Pengajuan" vs "Halaman Persetujuan"; bab penutup tertulis "BAB KESIMPULAN" tanpa angka; salah ketik ("sampur", "dengari", "Flow Chat") | Istilah diseragamkan: *Lembar Persetujuan* dan *Halaman Pengesahan*; bab ditulis "BAB V KESIMPULAN DAN SARAN"; salah ketik dibenahi |
+| 10 | Template Proposal | Teks menyebut margin 2/2/2/2,5 cm dan pengukuran PDF 2,5 (kiri) / 2 (kanan) cm; bukan margin Pedoman | Margin **4/4/3/3** |
+| 11 | Template Proposal | Desimal ditulis titik ("0.25") bertentangan dengan Pedoman (koma) | Desimal **koma** ("0,25") |
+| 12 | Template Proposal | Judul bab "1. PENDAHULUAN"; tiap bab tidak selalu di halaman baru | "BAB I" + judul, **tiap bab di halaman baru** |
+| 13 | Template Proposal | Tidak ada abstrak dan daftar isi; tabel tanpa garis penuh; jadwal bertahun "2018" | Ditambah **abstrak (Indonesia dan Inggris)** dan **daftar isi/tabel/gambar**; tabel **kotak penuh**; tahun jadwal "202x" |
+| 14 | Template Proposal | Proposal terdiri atas empat bab (jadwal sebagai bab sendiri) | Proposal **hanya sampai Bab III**; jadwal pelaksanaan menjadi subbab Bab III |
+| 15 | Template Proposal | Salah ketik ("propopsal", "gabar", "Tinjuan", "junal") | Dibenahi |
+| 16 | Formulir | Ukuran kertas **Letter** (bukan A4), huruf Calibri padahal petunjuknya Arial, margin 2,5/1,9 cm | **A4**, **Arial**, margin seragam |
+| 17 | Formulir | Kotak terpotong antarhalaman, judul bagian tertinggal di dasar halaman, penomoran daftar "1., 2., 3." berlanjut pada usulan 2 dan 3 | Satu tabel kotak penuh per usulan, satu halaman per usulan, penomoran tidak berlanjut |
+| 18 | Formulir | "NIM", salah ketik ("dtulis", "d Bold", "masing-2", "Um. Buton") | "NPM", ejaan dan penulisan "UM Buton" dibenahi |
+
+## 14.2 Daftar periksa kesesuaian (hasil pemeriksaan otomatis)
+
+Pemeriksaan berikut dijalankan pada seluruh PDF hasil (Pedoman, Proposal, Seminar Hasil, Skripsi, dan contohnya):
+
+| Aturan Pedoman | Status |
+|------------------------------|--------------------|
+| Kertas A4 | sesuai (juga pada berkas Word) |
+| Margin 4/4/3/3 cm; teks, tabel, gambar tidak melewati margin | sesuai |
+| Huruf Times New Roman 12 pt; judul bab 14 pt tebal kapital | sesuai (rumus memakai TeX Gyre Termes Math agar serasi) |
+| Isi 1,5 spasi; abstrak, judul tabel/gambar, isi tabel, daftar, daftar pustaka, lampiran 1 spasi | sesuai |
+| Rata kanan-kiri; alinea menjorok 1 cm | sesuai |
+| Satu baris sendirian di awal/akhir halaman tidak boleh | sesuai (`\widowpenalty` dan `\clubpenalty` 10000) |
+| Setiap bab mulai di halaman baru; judul subbab tidak sendirian di dasar halaman | sesuai |
+| Tidak ada subbab tunggal (1.1 harus disertai 1.2) | sesuai pada semua dokumen |
+| Tabel tidak terpotong antarhalaman (kecuali tabel panjang di lampiran) | sesuai; satu tabel panjang di Lampiran 6 Pedoman dibenarkan Pedoman |
+| Judul tabel di atas, judul gambar di bawah, tanpa titik di akhir judul | sesuai |
+| Nomor halaman: awal bab tengah bawah, selanjutnya kanan atas; depan romawi | sesuai |
+| Nama pada lembar persetujuan/pengesahan satu baris | sesuai |
+
+**Catatan keterbatasan:** tampilan berkas Word (`.docx`) diperiksa lewat struktur isinya (ukuran kertas, margin, huruf, gaya paragraf) dan tidak dirender ulang pada pengerjaan terakhir. Setelah membuka berkas Word, perbarui *field* (Ctrl+A, F9) agar daftar isi, daftar tabel, daftar gambar, dan daftar lampiran terisi, lalu periksa sekilas pemenggalan halaman.
+
+Isi Bab IV Pedoman (tata cara pengajuan judul, bimbingan, seminar, dan ujian) bersifat umum karena Pedoman asli berhenti pada bab "Penutup". **Sesuaikan dengan ketentuan Program Studi** sebelum diberlakukan.
+

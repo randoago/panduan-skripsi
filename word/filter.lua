@@ -7,6 +7,7 @@
 local STYLE   = 'bab'
 local NUMMODE = 'urut'
 local inbody, firstbab, babseksi = false, true, false
+local lampbm = false   -- penanda awal daftar lampiran (bookmark Word)
 local lamp = nil   -- nomor lampiran aktif (gambar/tabel di lampiran bernomor L2.1)   -- seksi per bab (nomor halaman awal bab)
 
 function Meta(m)
@@ -57,6 +58,14 @@ function Header(h)
       local n = pandoc.utils.stringify(h.content):match('^LAMPIRAN%s+(%d+)')
       lamp = n
       if n then nTabel, nGambar = 0, 0 end
+      if n and not lampbm then
+        lampbm = true
+        local out = {}
+        if sb then out[#out + 1] = sb end
+        out[#out + 1] = pandoc.RawBlock('openxml', '<w:bookmarkStart w:id="900" w:name="DAFTAR_LAMPIRAN"/>')
+        out[#out + 1] = h
+        return out
+      end
     end
     if sb then return { sb, h } end
     return h
@@ -234,8 +243,12 @@ function Div(d)
     local judul = tabel and {pandoc.Str('DAFTAR'), pandoc.Space(), pandoc.Str('TABEL')}
                         or  {pandoc.Str('DAFTAR'), pandoc.Space(), pandoc.Str('GAMBAR')}
     local gaya = tabel and 'Table Caption' or 'Image Caption'
-    local f = '<w:p><w:pPr><w:pStyle w:val="TOCNote"/></w:pPr><w:r><w:fldChar w:fldCharType="begin" w:dirty="true"/></w:r><w:r><w:instrText xml:space="preserve"> TOC \\h \\z \\t "' .. gaya .. ',1" </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:t>Klik kanan di sini, lalu pilih “Update Field” untuk memuat daftar.</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r></w:p>'
+    local f = '<w:p><w:pPr><w:pStyle w:val="TOCNote"/></w:pPr><w:r><w:fldChar w:fldCharType="begin" w:dirty="true"/></w:r><w:r><w:instrText xml:space="preserve"> TOC \\h \\z \\t "' .. gaya .. ',2" </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:t>Klik kanan di sini, lalu pilih “Update Field” untuk memuat daftar.</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r></w:p>'
     return { pandoc.Header(1, judul, pandoc.Attr('', {'unnumbered'})), rawb(f) }
+  end
+  if has(d, 'daftarlampiran') then
+    local f = '<w:p><w:pPr><w:pStyle w:val="TOCNote"/></w:pPr><w:r><w:fldChar w:fldCharType="begin" w:dirty="true"/></w:r><w:r><w:instrText xml:space="preserve"> TOC \\o "1-1" \\b DAFTAR_LAMPIRAN \\h \\z </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:t>Klik kanan di sini, lalu pilih “Update Field” untuk memuat daftar.</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r></w:p>'
+    return { pandoc.Header(1, {pandoc.Str('DAFTAR'), pandoc.Space(), pandoc.Str('LAMPIRAN')}, pandoc.Attr('', {'unnumbered'})), rawb(f) }
   end
   if has(d, 'halamanbaru') then return { rawb('<w:p><w:r><w:br w:type="page"/></w:r></w:p>') } end
   if has(d, 'akhirsampul') then return { seksi('sampul') } end
@@ -265,8 +278,15 @@ end
 function OrderedList(l) l.content = wrap_items(l.content); return l end
 function BulletList(l)  l.content = wrap_items(l.content); return l end
 
+-- tutup bookmark daftar lampiran di akhir dokumen
+function Pandoc(doc)
+  if lampbm then doc.blocks:insert(pandoc.RawBlock('openxml', '<w:bookmarkEnd w:id="900"/>')) end
+  return doc
+end
+
 return {
   { Meta = Meta },
   { traverse = 'topdown', Div = Div, Header = Header, Table = Table, Figure = Figure,
     OrderedList = OrderedList, BulletList = BulletList },
+  { Pandoc = Pandoc },
 }
